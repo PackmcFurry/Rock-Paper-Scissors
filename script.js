@@ -26,13 +26,13 @@ function playgame(){
 
 let humanpoints = 0
 let computerpoints = 0
+let rounds
 
     // Function that compares both choices, and says who's the winner
     function playroud(HumanChoice, ComputerChoice){
         HumanChoice = HumanChoice.toLowerCase()
-        console.log(HumanChoice)
-        console.log(ComputerChoice)
 
+        console.log(`---Round${rounds}/5---`)        
         if(HumanChoice == ComputerChoice){
             console.log(`TIED! You picked ${HumanChoice} and i picked ${ComputerChoice}`)
         } 
@@ -46,16 +46,16 @@ let computerpoints = 0
         }
     }
 
-    //this makes the game loop for the total of 5 times
-    for(let i = 0; i<5; i++){
+    //this makes the game loop for the total of 5 time
+    for(rounds = 1; rounds<=5; rounds++){
         const HumanSelection = getHumanChoice()
         const ComputerSelection = getComputerChoice()
 
         playroud(HumanSelection, ComputerSelection)
     } 
 
-        console.log(`Check your screen! The game is over!`)
-        window.alert(`GAME OVER! Score: [You: ${humanpoints}] [Computer: ${computerpoints}]`)
+        console.log(`---GAME OVER!---`)
+        console.log(`Score: [You: ${humanpoints}] [Computer: ${computerpoints}]`)
 }
 
 playgame()
