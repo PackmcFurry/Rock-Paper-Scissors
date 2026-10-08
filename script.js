@@ -1,4 +1,3 @@
-
 // function to generate a random number from 1-3
 function getComputerChoice(){
         const minceiled = Math.ceil(1)
@@ -15,47 +14,65 @@ function getComputerChoice(){
 }
 
 
-// Function that ask the player to input their play
-function getHumanChoice(){
-    let humanplay = window.prompt("Rock-Paper-Scissors, GO!")
-    return (humanplay)
-}
+// Function that compares both choices, and says who's the winner
+function playround(HumanChoice, ComputerChoice){
+    let pointResult = document.createElement("div")
+    pointResult.classList.add("result")
 
-//this function has code from the rock-paper-scissors with looping 5 times
-function playgame(){
-
-let humanpoints = 0
-let computerpoints = 0
-let rounds
-
-    // Function that compares both choices, and says who's the winner
-    function playroud(HumanChoice, ComputerChoice){
-        HumanChoice = HumanChoice.toLowerCase()
-
-        console.log(`---Round${rounds}/5---`)        
-        if(HumanChoice == ComputerChoice){
-            console.log(`TIED! You picked ${HumanChoice} and i picked ${ComputerChoice}`)
-        } 
-        else if (HumanChoice == "rock" && ComputerChoice == "scissors" || HumanChoice == "paper" && ComputerChoice == "rock" || HumanChoice == "scissors" && ComputerChoice == "paper"){
-            console.log(`YOU WON! You bastard, you picked ${HumanChoice} and i got fooled into picking ${ComputerChoice}`)
-            humanpoints++
-        }
-        else if (ComputerChoice == "rock" && HumanChoice == "scissors" || ComputerChoice == "paper" && HumanChoice == "rock" || ComputerChoice == "scissors" && HumanChoice == "paper"){
-            console.log(`YOU LOST! You cant outsmart a machine picking something so obvious as ${HumanChoice} while i have ${ComputerChoice} in my arsenal`)
-            computerpoints++
-        }
+    if(HumanChoice == ComputerChoice){
+        pointResult.textContent = `TIED! You picked ${HumanChoice} and i picked ${ComputerChoice}`
+        container.appendChild(pointResult)
+        scoreBoard.textContent = "Tied!"
+    } 
+    else if (HumanChoice == "rock" && ComputerChoice == "scissors" || HumanChoice == "paper" && ComputerChoice == "rock" || HumanChoice == "scissors" && ComputerChoice == "paper"){
+        pointResult.textContent = `YOU WON! You bastard, you picked ${HumanChoice} and i got fooled into picking ${ComputerChoice}`
+        container.appendChild(pointResult)
+        scoreBoard.textContent = "Won!"
+        humanPoints++   
+        HPScore.textContent = humanPoints
+    }
+    else if (ComputerChoice == "rock" && HumanChoice == "scissors" || ComputerChoice == "paper" && HumanChoice == "rock" || ComputerChoice == "scissors" && HumanChoice == "paper"){
+        pointResult.textContent = `YOU LOST! You cant outsmart a machine picking something so obvious as ${HumanChoice} while i have ${ComputerChoice} in my arsenal`
+        container.appendChild(pointResult)
+        scoreBoard.textContent ="Lost!"
+        computerPoints++  
+        CPScore.textContent = computerPoints  
     }
 
-    //this makes the game loop for the total of 5 time
-    for(rounds = 1; rounds<=5; rounds++){
-        const HumanSelection = getHumanChoice()
-        const ComputerSelection = getComputerChoice()
-
-        playroud(HumanSelection, ComputerSelection)
+    if(computerPoints == 5 || humanPoints == 5){
+        finishGame()
     } 
-
-        console.log(`---GAME OVER!---`)
-        console.log(`Score: [You: ${humanpoints}] [Computer: ${computerpoints}]`)
 }
 
-playgame()
+function finishGame(){
+    if (humanPoints > computerPoints){
+        alert(`Congratulations! You won! With the end result being ${humanPoints}X${computerPoints}`)
+    } else {
+        alert(`What a shame! You lost! With the end result being ${humanPoints}X${computerPoints}`)
+    }
+
+    computerPoints = 0
+    humanPoints = 0
+    CPScore.textContent = computerPoints 
+    HPScore.textContent = humanPoints
+    container.innerHTML = ''
+    scoreBoard.textContent = "Result"
+}
+
+const HCRock = document.getElementById("rock")
+const HCPaper = document.getElementById("paper")
+const HCScissors = document.getElementById("scissors")
+
+const container = document.getElementById("container")
+
+const HPScore = document.getElementById("HP")
+const CPScore = document.getElementById("CP")
+
+const scoreBoard = document.getElementById("result")
+
+let humanPoints = 0
+let computerPoints = 0
+
+HCRock.addEventListener("click", () => playround("rock", getComputerChoice()))
+HCPaper.addEventListener("click", () => playround("paper", getComputerChoice()))
+HCScissors.addEventListener("click", () => playround("scissors", getComputerChoice()))
